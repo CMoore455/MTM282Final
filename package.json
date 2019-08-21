@@ -1,0 +1,19 @@
+{
+  "name": "mtm282final",
+  "version": "1.0.0",
+  "description": "This is the final project for the MTM282 class. This site is \"selling\" mirrors.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CMoore97/MTM282Final.git"
+  },
+  "author": "Christian Moore & Kyle Murphy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CMoore97/MTM282Final/issues"
+  },
+  "homepage": "https://github.com/CMoore97/MTM282Final#readme"
+}
