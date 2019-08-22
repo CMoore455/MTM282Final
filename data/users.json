@@ -1,0 +1,11 @@
+{
+    "username": "",
+    "password": "",
+    "isAdmin": bool,
+    "email": "",
+    "age": 0,
+    "isActive": bool,
+    "responses": {
+        "question" : choice
+    }
+}
