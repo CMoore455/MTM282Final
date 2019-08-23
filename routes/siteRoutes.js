@@ -5,7 +5,14 @@ const siteRouter = express.Router()
 siteRouter.route(['/', '/home']).get(
     function(request, response) {
         let model = models.getUiModel("Mirrors - Home", "Welcome to the Home Page")
-        model.user = null;
+        
+        if (request.session.username) {
+            let user = {
+                username: request.session.username,
+                isAdmin: request.session.isAdmin
+            }
+            model.user = user
+        }
 
         response.render("home", model )
     }
