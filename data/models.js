@@ -30,6 +30,14 @@ function getUiModel(pageTitle, pageHeader) {
         pageTitle: pageTitle,
         pageHeader: pageHeader
     }
+    
+    if (request.session.username) {
+        let user = {
+            username: request.session.username,
+            isAdmin: request.session.isAdmin
+        }
+        model.user = user
+    }
 
     return model
 }
