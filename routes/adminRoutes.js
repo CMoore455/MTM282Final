@@ -55,15 +55,21 @@ adminRouter.route('/register').post(
                 age: request.body.age
             }
         )
-        
-        newUser.save(function (err, fluffy) {
-            if (err) {
-                response.redirect("register")
-                return console.error(err);
+        models.User.find({email: newUser.email}, function (err, docs) {
+            if (docs.length){
+                console.log('Name exists already',null);
+            }else{
+                newUser.save(function (err, fluffy) {
+                    if (err) {
+                        response.redirect("register")
+                        return console.error(err);
+                    }
+                    response.redirect("/")
+                    console.log('--- User saved ---')
+                });
             }
-            response.redirect("/")
-            console.log('--- User saved ---')
         });
+        
         
     }
 )
