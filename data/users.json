@@ -6,6 +6,6 @@
     "age": 0,
     "isActive": bool,
     "responses": {
-        "question" : choice
+        "questionId" : choice
     }
 }
