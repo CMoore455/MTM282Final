@@ -14,7 +14,10 @@ const port = 3000
 //   client.close();
 // });
 
-
+app.use(session({
+    secret: "secretKey",
+    cookie: { }
+}))
 app.use(express.static(__dirname + "/public"))
 app.set('view engine', 'pug')
 
@@ -27,11 +30,10 @@ app.use("/admin", adminRouter)
 const siteRouter = require("./routes/siteRoutes")
 app.use("/", siteRouter)
 
-app.use(session({
-    secret: "secretKey",
-    cookie: { }
-}))
+
 
 app.listen(port, () => {
     console.log(`Express ready on port ${port}`)
 })
+
+module.exports = {app}

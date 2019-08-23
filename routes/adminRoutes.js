@@ -29,6 +29,7 @@ adminRouter.route('/login').post(
                 let success = bcrypt.compareSync(postedPassword, docs[0].password);
                 console.log(request)
                 if (success && docs[0].isActive) {
+                    
                     request.session.username = docs[0].username
                     request.session.isAdmin = docs[0].isAdmin
                     request.session.secret = 'mirrors'
