@@ -9,6 +9,10 @@ let errorMessage = null;
 adminRouter.route(`/login`).get(
     function(request, response) {
         let model = models.getUiModel("Mirrors - Log In!", "User Log In")
+        if (errorMessage) {
+            model.errorMessage = errorMessage
+            errorMessage = null
+        }
         response.render('login', model)
     }
 )
