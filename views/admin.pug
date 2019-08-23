@@ -1,0 +1,7 @@
+extends layout.pug
+block contentBlock
+    if allUsers
+        div(class="userList")
+            each user in allUsers
+                include userDetailMixin.pug
+                +userDetailMixin(user)

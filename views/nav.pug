@@ -5,7 +5,7 @@ nav
         a(href="/admin/profile")=user.username
         if user.isAdmin
             a(href="/admin/Admin")="Admin"
-            a(href="/admin/logout")="Log Out"
+        a(href="/admin/logout")="Log Out"
     else 
         a(href="/admin/login")="Log In"
         a(href="/admin/register")="Register"

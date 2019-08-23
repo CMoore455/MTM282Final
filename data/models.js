@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 const Schema = mongoose.Schema
 mongoose.connect('mongodb+srv://webfinaluser:WebFinal@number2mylord-hy3vz.mongodb.net/Number2MyLord?retryWrites=true&w=majority', {useNewUrlParser: true} )
 
@@ -11,7 +12,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 //     let adminUser = new User(
 //         {
 //             username: 'admin',
-//             password: 'pass',
+//             password: bcrypt.hashSync('pass'),
 //             isAdmin: true,
 //             isActive: true,
 //             age: 239

@@ -89,11 +89,25 @@ adminRouter.route('/register').post(
                     console.log('--- User saved ---')
                 });
             }
-            
         });
-        
-        
     }
 )
+
+// Shows a table listing all of the users, theirs user information and current status (active,  suspended.)
+// Give the admin user the ability to suspend/activate user accounts. 
+adminRouter.route('/admin').get(
+    function(request, response) {
+        let model = models.getUiModel("Admin Page", "Admin Page")
+
+        // get all users
+        models.Question.find( { username: { $not: "admin" } }, function (err, docs) {
+            if (docs.length) {
+                model.allUsers = docs
+            }
+            response.render('admin', model)
+        })
+    }
+)
+
 
 module.exports = adminRouter
