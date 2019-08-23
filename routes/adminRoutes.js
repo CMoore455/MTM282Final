@@ -55,9 +55,9 @@ adminRouter.route('/register').post(
                 age: request.body.age
             }
         )
-        models.User.find({email: newUser.email}, function (err, docs) {
+        models.User.find({email: newUser.email, username: newUser.username}, function (err, docs) {
             if (docs.length){
-                console.log('Name exists already',null);
+                console.log('Email and username exist already');
             }else{
                 newUser.save(function (err, fluffy) {
                     if (err) {
