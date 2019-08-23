@@ -89,10 +89,7 @@ adminRouter.route('/register').post(
                     console.log('--- User saved ---')
                 });
             }
-            
         });
-        
-        
     }
 )
 
