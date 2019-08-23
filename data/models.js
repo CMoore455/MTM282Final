@@ -1,29 +1,29 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-mongoose.connect('mongodb+srv://webfinaluser:WebFinal@number2mylord-hy3vz.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true} )
+mongoose.connect('mongodb+srv://webfinaluser:WebFinal@number2mylord-hy3vz.mongodb.net/Number2MyLord?retryWrites=true&w=majority', {useNewUrlParser: true} )
 
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-    // we're connected!
-    console.log('--- Creating Admin user ---')
-    let adminUser = new User(
-        {
-            username: 'admin',
-            password: 'pass',
-            isAdmin: true,
-            isActive: true,
-            age: 239
-        }
-    )
-    console.log(user)
+// db.once('open', function() {
+//     // we're connected!
+//     console.log('--- Creating Admin user ---')
+//     let adminUser = new User(
+//         {
+//             username: 'admin',
+//             password: 'pass',
+//             isAdmin: true,
+//             isActive: true,
+//             age: 239
+//         }
+//     )
+//     console.log(adminUser)
 
-    adminUser.save(function (err, fluffy) {
-        if (err) return console.error(err);
-        console.log('--- Admin saved ---')
-    });
-});
+//     adminUser.save(function (err, fluffy) {
+//         if (err) return console.error(err);
+//         console.log('--- Admin saved ---')
+//     });
+// });
 
 // Mongoose Schema represents a collection in the MongoDB
 // It is the skeleton of the model
