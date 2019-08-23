@@ -4,9 +4,11 @@ var bcrypt = require('bcryptjs');
 const mongoose = require('mongoose')
 mongoose.connect('mongodb+srv://webfinaluser:WebFinal@number2mylord-hy3vz.mongodb.net/Number2MyLord?retryWrites=true&w=majority', {useNewUrlParser: true} )
 const adminRouter = express.Router()
+let errorMessage = null;
 
 adminRouter.route(`/login`).get(
     function(request, response) {
+        let model = models.getUiModel("Mirrors - Log In!", "User Log In")
         response.render('login', model)
     }
 )
@@ -36,8 +38,12 @@ adminRouter.route(`/login`).post(
 
 adminRouter.route('/register').get(
     function (request, response) {
-
-        response.render("register")
+        let model = models.getUiModel("Mirrors - Register", "User Registration")
+        if (errorMessage) {
+            model.errorMessage = errorMessage
+            errorMessage = null
+        }
+        response.render("register", model)
     }
 )
 
@@ -55,9 +61,10 @@ adminRouter.route('/register').post(
                 age: request.body.age
             }
         )
-        models.User.find({email: newUser.email, username: newUser.username}, function (err, docs) {
+        models.User.find( { $or: [{email: newUser.email}, {username: newUser.username}] }, function (err, docs) {
             if (docs.length){
-                console.log('Email and username exist already');
+                errorMessage = 'Email or username exist already'
+                response.redirect("register")
             }else{
                 newUser.save(function (err, fluffy) {
                     if (err) {
@@ -68,6 +75,7 @@ adminRouter.route('/register').post(
                     console.log('--- User saved ---')
                 });
             }
+            
         });
         
         

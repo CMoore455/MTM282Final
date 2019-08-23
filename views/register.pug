@@ -1,5 +1,7 @@
 extends layout.pug
 block contentBlock
+    if errorMessage
+        h2=errorMessage
     form(action="/admin/register", method="post")
         div(class="formEntry")
             label(for="email")="Email"

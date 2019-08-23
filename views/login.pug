@@ -1,0 +1,10 @@
+extends layout.pug
+block contentBlock
+    form(action="/admin/login", method="post")
+        div(class="formEntry")
+            label(for="usernameOrEmail")="Username or Email"
+            input(type="text", name="usernameOrEmail")
+        div(class="formEntry")
+            label(for="password")="Password"
+            input(type="password", name="password")
+    a(href="/admin/register")="Register"
