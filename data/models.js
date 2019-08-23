@@ -33,7 +33,7 @@ const questionSchema = new Schema({
 })
 
 // This creates a JS object based off the Schema to use in code and CRUD operations
-const Question = mongoose.model('Question', questionSchema)
+const Question = mongoose.model('Question', questionSchema, "questions")
 
 const userSchema = new Schema({
     username: String,
@@ -45,4 +45,4 @@ const userSchema = new Schema({
     responses: [questionSchema]
 })
 
-const User = mongoose.model('User', userSchema)
+const User = mongoose.model('User', userSchema, "users")
