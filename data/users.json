@@ -1,11 +1,11 @@
 {
     "username": "",
     "password": "",
-    "isAdmin": bool,
+    "isAdmin": "bool",
     "email": "",
     "age": 0,
-    "isActive": bool,
+    "isActive": "bool",
     "responses": {
-        "questionId" : choice
+        "questionId" : "choice"
     }
 }
