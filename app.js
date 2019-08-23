@@ -1,7 +1,7 @@
-const Express = require('express')
+const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const app = Express()
+const app = express()
 const port = 3000
 
 
@@ -15,7 +15,7 @@ const port = 3000
 // });
 
 
-app.use(Express.static(`${__dirname}`))
+app.use(express.static(__dirname + "/public"))
 app.set('view engine', 'pug')
 
 app.use(bodyParser.json())

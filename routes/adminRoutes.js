@@ -6,7 +6,7 @@ mongoose.connect('mongodb+srv://webfinaluser:WebFinal@number2mylord-hy3vz.mongod
 const adminRouter = express.Router()
 let errorMessage = null;
 
-adminRouter.route(`/login`).get(
+adminRouter.route('/login').get(
     function(request, response) {
         let model = models.getUiModel("Mirrors - Log In!", "User Log In")
         if (errorMessage) {
@@ -17,15 +17,17 @@ adminRouter.route(`/login`).get(
     }
 )
 
-adminRouter.route(`/login`).post(
+adminRouter.route('/login').post(
     function(request, response) {
-        let postedUsernameOrEmail = response.body.usernameOrEmail
-        let postedPassword = response.body.password
-        
+        let postedUsernameOrEmail = request.body["usernameOrEmail"]
+        let postedPassword = request.body["password"]
+        console.log(request)
         models.User.find( { $or: [{email: postedUsernameOrEmail}, {username: postedUsernameOrEmail}] }, function (err, docs) {
             if (docs.length){
+                console.log(postedPassword)
+                console.log(docs[0].password)
                 let success = bcrypt.compareSync(postedPassword, docs[0].password);
-                
+                console.log(request)
                 if (success && docs[0].isActive) {
                     request.session.username = docs[0].username
                     request.session.isAdmin = docs[0].isAdmin
@@ -37,9 +39,7 @@ adminRouter.route(`/login`).post(
             }else{
             }
             
-        });
-        let success = bcrypt.compareSync(postedPassword, );
-        
+        });      
      
     }
 )
