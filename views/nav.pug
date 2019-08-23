@@ -2,7 +2,7 @@ nav
     //- logic to determine if we should display login/register or logout
     a(href="/home")="Home"
     if user
-        a(href="/admin/profile")="Profile"
+        a(href="/admin/profile")=user.username
         a(href="/admin/logout")="Log Out"
     else 
         a(href="/admin/login")="Log In"
