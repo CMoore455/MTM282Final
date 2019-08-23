@@ -1,0 +1,16 @@
+extends layout.pug
+block contentBlock
+    form(action="/admin/register", method="post")
+        div(class="formEntry")
+            label(for="email")="Email"
+            input#(type="text", name="email")
+        div(class="formEntry")
+            label(for="username")="Username"
+            input#(type="text", name="username")
+        div(class="formEntry")
+            label(for="password")="Password"
+            input#(type="password", name="password")
+        div(class="formEntry")
+            label(for="age")="Age"
+            input#(type="number", name="age")
+        input(class="submit", type="submit", value="")="Complete Registration"

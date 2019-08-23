@@ -1,0 +1,10 @@
+nav
+    //- logic to determine if we should display login/register or logout
+    a(href="/home")="Home"
+    if user
+        a(href="/profile")="Profile"
+        a(href="/logout")="Log Out"
+    else 
+        a(href="/login")="Log In"
+        a(href="/register")="Register"
+    a(href="")=""
