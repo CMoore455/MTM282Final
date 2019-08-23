@@ -1,4 +1,4 @@
-const express = require('express')
+const Express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const app = Express()
@@ -15,20 +15,17 @@ const port = 3000
 // });
 
 
-app.use(express.static(`${__dirname}`))
-app.use('view engine', 'pug')
+app.use(Express.static(`${__dirname}`))
+app.set('view engine', 'pug')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded( { extended:true } ))
 
-const productRoutes = require("./routes/productRoutes")
-app.use("/products", productRoutes)
-
 const adminRouter = require("./routes/adminRoutes")
 app.use("/admin", adminRouter)
 
-const siteRoutes = require("./routes/siteRoutes")
-app.use("/", siteRoutes)
+const siteRouter = require("./routes/siteRoutes")
+app.use("/", siteRouter)
 
 app.use(session({
     secret: "secretKey",
