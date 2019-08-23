@@ -48,11 +48,16 @@ adminRouter.route('/login').post(
 adminRouter.route('/register').get(
     function (request, response) {
         let model = models.getUiModel("Mirrors - Register", "User Registration")
-        if (errorMessage) {
-            model.errorMessage = errorMessage
-            errorMessage = null
-        }
-        response.render("register", model)
+        models.Question.find({}, function (err, docs) {
+            
+            model.questions = docs
+            if (errorMessage) {
+                model.errorMessage = errorMessage
+                errorMessage = null
+            }
+            response.render("register", model)
+        })
+       
     }
 )
 
