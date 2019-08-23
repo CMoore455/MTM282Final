@@ -31,4 +31,10 @@ adminRouter.route(`/login`).post(
     }
 )
 
+adminRouter.route('/register').get(
+    function (request, response) {
+        response.render("register")
+    }
+)
+
 module.exports = adminRouter
