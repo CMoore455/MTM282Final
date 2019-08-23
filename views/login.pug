@@ -1,5 +1,7 @@
 extends layout.pug
 block contentBlock
+    if errorMessage
+        h2=errorMessage
     form(action="/admin/login", method="post")
         div(class="formEntry")
             label(for="usernameOrEmail")="Username or Email"
@@ -7,4 +9,5 @@ block contentBlock
         div(class="formEntry")
             label(for="password")="Password"
             input(type="password", name="password")
+        input(type="submit", value="Verify Log In")
     a(href="/admin/register")="Register"
