@@ -25,6 +25,15 @@ db.on('error', console.error.bind(console, 'connection error:'));
 //     });
 // });
 
+function getUiModel(pageTitle, pageHeader) {
+    let model = {
+        pageTitle: pageTitle,
+        pageHeader: pageHeader
+    }
+
+    return model
+}
+
 // Mongoose Schema represents a collection in the MongoDB
 // It is the skeleton of the model
 const questionSchema = new Schema({
@@ -46,4 +55,10 @@ const userSchema = new Schema({
 })
 
 const User = mongoose.model('User', userSchema, "users")
-module.exports = users
+
+module.exports = 
+    {
+        getUiModel, 
+        User,
+        Question
+    }
