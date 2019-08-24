@@ -1,7 +1,15 @@
 extends layout.pug
 block contentBlock
     if allUsers
-        div(class="userList")
+        table(class="usersTable")
+            tr
+                th="Username"
+                th="Is Active"
+                th="Is Admin"
+                th="Age"
+                th=`Response to: '${questions[0]}`
+                th=`Response to: '${questions[1]}`
+                th=`Response to: '${questions[2]}`
             each user in allUsers
                 include userDetailMixin.pug
                 +userDetailMixin(user)

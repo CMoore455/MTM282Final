@@ -98,14 +98,30 @@ adminRouter.route('/register').post(
 adminRouter.route('/admin').get(
     function(request, response) {
         let model = models.getUiModel("Admin Page", "Admin Page")
+        let promises = []
 
         // get all users
-        models.Question.find( { username: { $not: "admin" } }, function (err, docs) {
-            if (docs.length) {
-                model.allUsers = docs
-            }
-            response.render('admin', model)
-        })
+        promises.push(new Promise(function(resolve, reject) {
+            models.User.find( { username: { $not: "admin" } }, function (err, docs) {
+                if (docs.length) {
+                    model.allUsers = docs
+                }
+                resolve(model)
+            })
+        }))
+
+        promises.push(new Promise(function(resolve, reject) {
+            models.Question.find({}, function (err, docs) {
+                if (docs.length) {
+                    let questions = []
+                    for (let question in docs) {
+                        questions.push(qduestion.prompt)
+                    }
+                }
+                resolve(questions)
+            })
+        }))
+
     }
 )
 
