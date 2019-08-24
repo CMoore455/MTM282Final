@@ -131,5 +131,12 @@ adminRouter.route('/').get(
     }
 )
 
+adminRouter.route().get(
+    function(request, response) {
+        request.session.destroy()
+        let model = models.getUiModel("Mirrors - Logout", "Logged Out")
+        response.render("logout", model)
+})
+
 
 module.exports = adminRouter

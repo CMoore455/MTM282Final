@@ -32,12 +32,14 @@ function getUiModel(pageTitle, pageHeader, request) {
         pageHeader: pageHeader
     }
     
-    if (request.session.username) {
-        let user = {
-            username: request.session.username,
-            isAdmin: request.session.isAdmin
+    if (request) {
+        if (request.session.username) {
+            let user = {
+                username: request.session.username,
+                isAdmin: request.session.isAdmin
+            }
+            model.user = user
         }
-        model.user = user
     }
 
     return model
@@ -53,6 +55,11 @@ const questionSchema = new Schema({
 // This creates a JS object based off the Schema to use in code and CRUD operations
 const Question = mongoose.model('Question', questionSchema, "questions")
 
+const responseSchema = new Schema({
+    question: String,
+    choice: String
+})
+
 const userSchema = new Schema({
     username: String,
     password: String, 
@@ -60,7 +67,7 @@ const userSchema = new Schema({
     age: Number,
     isAdmin: Boolean,
     isActive: Boolean,
-    responses: [questionSchema]
+    responses: [responseSchema]
 })
 
 const User = mongoose.model('User', userSchema, "users")
