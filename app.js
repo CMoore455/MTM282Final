@@ -27,6 +27,9 @@ app.use(bodyParser.urlencoded( { extended:true } ))
 const adminRouter = require("./routes/adminRoutes")
 app.use("/admin", adminRouter)
 
+const questionRouter = require("./routes/questionRoutes")
+app.use("/question", questionRouter)
+
 const siteRouter = require("./routes/siteRoutes")
 app.use("/", siteRouter)
 

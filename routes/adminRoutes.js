@@ -8,7 +8,7 @@ let errorMessage = null;
 
 adminRouter.route('/login').get(
     function(request, response) {
-        let model = models.getUiModel("Mirrors - Log In!", "User Log In")
+        let model = models.getUiModel("Mirrors - Log In!", "User Log In", request)
         if (errorMessage) {
             model.errorMessage = errorMessage
             errorMessage = null
@@ -47,7 +47,7 @@ adminRouter.route('/login').post(
 
 adminRouter.route('/register').get(
     function (request, response) {
-        let model = models.getUiModel("Mirrors - Register", "User Registration")
+        let model = models.getUiModel("Mirrors - Register", "User Registration", request)
         models.Question.find({}, function (err, docs) {
             
             model.questions = docs
@@ -97,7 +97,7 @@ adminRouter.route('/register').post(
 // Give the admin user the ability to suspend/activate user accounts. 
 adminRouter.route('/admin').get(
     function(request, response) {
-        let model = models.getUiModel("Admin Page", "Admin Page")
+        let model = models.getUiModel("Admin Page", "Admin Page", request)
         let promises = []
 
         // get all users
