@@ -95,9 +95,9 @@ adminRouter.route('/register').post(
 
 // Shows a table listing all of the users, theirs user information and current status (active,  suspended.)
 // Give the admin user the ability to suspend/activate user accounts. 
-adminRouter.route('/admin').get(
+adminRouter.route('/').get(
     function(request, response) {
-        let model = models.getUiModel("Admin Page", "Admin Page")
+        let model = models.getUiModel("Admin Page", "Admin Page", request)
         let promises = []
 
         // get all users
@@ -115,13 +115,19 @@ adminRouter.route('/admin').get(
                 if (docs.length) {
                     let questions = []
                     for (let question in docs) {
-                        questions.push(qduestion.prompt)
+                        questions.push(question.prompt)
                     }
                 }
                 resolve(questions)
             })
         }))
 
+
+        Promise.all(promises).then( (dataArray) => {
+            console.log(dataArray)
+
+
+        })
     }
 )
 

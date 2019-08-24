@@ -26,7 +26,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 //     });
 // });
 
-function getUiModel(pageTitle, pageHeader) {
+function getUiModel(pageTitle, pageHeader, request) {
     let model = {
         pageTitle: pageTitle,
         pageHeader: pageHeader
