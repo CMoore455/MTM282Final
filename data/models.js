@@ -50,6 +50,8 @@ const questionSchema = new Schema({
     choices: [String]
 })
 
+
+
 // This creates a JS object based off the Schema to use in code and CRUD operations
 const Question = mongoose.model('Question', questionSchema, "questions")
 
