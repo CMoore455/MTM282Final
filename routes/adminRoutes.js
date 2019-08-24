@@ -131,7 +131,7 @@ adminRouter.route('/').get(
     }
 )
 
-adminRouter.route().get(
+adminRouter.route('/logout').get(
     function(request, response) {
         request.session.destroy()
         let model = models.getUiModel("Mirrors - Logout", "Logged Out")
