@@ -19,15 +19,12 @@ adminRouter.route('/login').get(
 
 adminRouter.route('/login').post(
     function(request, response) {
-        let postedUsernameOrEmail = request.body["usernameOrEmail"]
+        let postedUsernameOrEmail = request.body["usernameOrEmail"].toLowerCase()
         let postedPassword = request.body["password"]
-        console.log(request)
+        
         models.User.find( { $or: [{email: postedUsernameOrEmail}, {username: postedUsernameOrEmail}] }, function (err, docs) {
             if (docs.length){
-                console.log(postedPassword)
-                console.log(docs[0].password)
                 let success = bcrypt.compareSync(postedPassword, docs[0].password);
-                console.log(request)
                 if (success && docs[0].isActive) {
                     
                     request.session.username = docs[0].username
@@ -40,7 +37,7 @@ adminRouter.route('/login').post(
             }else{
             }
             
-        });      
+        });
      
     }
 )
@@ -103,7 +100,9 @@ adminRouter.route('/').get(
         // get all users
         promises.push(new Promise(function(resolve, reject) {
             models.User.find( { username: { $not: "admin" } }, function (err, docs) {
-                if (docs.length) {
+                if (docs && docs.length) {
+                    console.log("\n\n<-- PRINTING QUESTIONS DOC -->")
+                    console.log(docs)
                     model.allUsers = docs
                 }
                 resolve(model)
@@ -112,26 +111,29 @@ adminRouter.route('/').get(
 
         promises.push(new Promise(function(resolve, reject) {
             models.Question.find({}, function (err, docs) {
+                if (err) return console.log(err)
                 if (docs.length) {
+                    console.log("\n\n<-- PRINTING QUESTIONS DOC -->")
                     let questions = []
                     for (let question in docs) {
                         questions.push(question.prompt)
                     }
+                    resolve(questions)
                 }
-                resolve(questions)
             })
         }))
 
 
         Promise.all(promises).then( (dataArray) => {
+            console.log("\n\n<-- PRINTING DATA ARRAY -->")
             console.log(dataArray)
-
-
+            response.render("admin", model)
+MAKE SURE DATA IS GETTING OUT OF DB AND TO ADMIN PAGE
         })
     }
 )
 
-adminRouter.route().get(
+adminRouter.route('/logout').get(
     function(request, response) {
         request.session.destroy()
         let model = models.getUiModel("Mirrors - Logout", "Logged Out")

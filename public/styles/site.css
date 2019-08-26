@@ -1,0 +1,9 @@
+root {
+    --daVar: #aaaaaa;
+}
+
+a:-webkit-any-link {
+    text-decoration: none;
+    color: black;
+    margin: 0px 20px;
+}

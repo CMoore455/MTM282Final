@@ -1,9 +1,9 @@
 html
     head
         title=pageTitle
+        link(href="/styles/site.css", rel="stylesheet", type="text/css")
     body
         include nav.pug
-        a(href="/home")
-            h1=pageHeader
+        h1=pageHeader
         block contentBlock
     footer='Created in 2019 by Christian Moore and Kyle Murphy'
