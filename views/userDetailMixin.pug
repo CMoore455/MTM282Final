@@ -6,6 +6,7 @@ mixin userDetailMixin(user)
         td=user.isActive
         td=user.isAdmin
         td=user.age
-        if user.responses
+        - console.log(user.responses)
+        if (user.responses && user.responses.length > 0)
             each response in responses
                 td=response.choice

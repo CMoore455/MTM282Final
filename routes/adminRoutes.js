@@ -113,37 +113,32 @@ adminRouter.route('/').get(
         // get all users
         promises.push(new Promise(function(resolve, reject) {
             models.User.find( { username: { $ne: "admin" } }, function (err, docs) {
-                console.log("\n<-- PRINTING USERS DOC -->\n")
-                console.log(docs)
+                if (err) return console.log(err)
                 if (docs && docs.length) {
-                    model.allUsers = docs
+                    resolve(docs)
                 }
-                resolve(model)
             })
         }))
 
         promises.push(new Promise(function(resolve, reject) {
             models.Question.find({}, function (err, docs) {
                 if (err) return console.log(err)
-                let questions = []
                 if (docs.length) {
-                    console.log("\n<-- PRINTING QUESTIONS DOC -->\n")
-                    console.log(docs)
-                        for (let question of docs) {
-                            console.log("\ttheQuestion:")
-                            console.log(question)
-                            console.log("\tquestion.prompt:")
-                            console.log(question['prompt'])
-                            questions.push(question['prompt'])
-                        }
+                    let questions = []
+                    for (let question of docs) {
+                        questions.push(question.prompt)
+                    }
                     resolve(questions)
                 }
             })
         }))
 
         Promise.all(promises).then( (dataArray) => {
-            console.log("\n<-- PRINTING DATA ARRAY -->\n")
-            console.log(dataArray)
+            console.log(dataArray[0])
+            console.log(dataArray[1])
+            model.allUsers = dataArray[0]
+            model.questions = dataArray[1]
+            console.log(model)
             response.render("admin", model)
         })
     }
