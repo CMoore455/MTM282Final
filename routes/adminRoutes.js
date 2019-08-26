@@ -99,10 +99,10 @@ adminRouter.route('/').get(
 
         // get all users
         promises.push(new Promise(function(resolve, reject) {
-            models.User.find( { username: { $not: "admin" } }, function (err, docs) {
+            models.User.find( { username: { $ne: "admin" } }, function (err, docs) {
+                console.log("\n<-- PRINTING USERS DOC -->\n")
+                console.log(docs)
                 if (docs && docs.length) {
-                    console.log("\n\n<-- PRINTING QUESTIONS DOC -->")
-                    console.log(docs)
                     model.allUsers = docs
                 }
                 resolve(model)
@@ -112,23 +112,26 @@ adminRouter.route('/').get(
         promises.push(new Promise(function(resolve, reject) {
             models.Question.find({}, function (err, docs) {
                 if (err) return console.log(err)
+                let questions = []
                 if (docs.length) {
-                    console.log("\n\n<-- PRINTING QUESTIONS DOC -->")
-                    let questions = []
-                    for (let question in docs) {
-                        questions.push(question.prompt)
-                    }
+                    console.log("\n<-- PRINTING QUESTIONS DOC -->\n")
+                    console.log(docs)
+                        for (let question of docs) {
+                            console.log("\ttheQuestion:")
+                            console.log(question)
+                            console.log("\tquestion.prompt:")
+                            console.log(question['prompt'])
+                            questions.push(question['prompt'])
+                        }
                     resolve(questions)
                 }
             })
         }))
 
-
         Promise.all(promises).then( (dataArray) => {
-            console.log("\n\n<-- PRINTING DATA ARRAY -->")
+            console.log("\n<-- PRINTING DATA ARRAY -->\n")
             console.log(dataArray)
             response.render("admin", model)
-MAKE SURE DATA IS GETTING OUT OF DB AND TO ADMIN PAGE
         })
     }
 )
