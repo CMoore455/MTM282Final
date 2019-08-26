@@ -19,7 +19,10 @@ window.onload = function () {
             newCanvas.setAttribute('id', newId)
             canvasCTXs.push(newCanvas.getContext('2d'))
             questionsChartsDiv.appendChild(newCanvas)
-            console.log(newCanvas)
+            let c = document.getElementById(newId)
+            c.height = 300;
+            c.width = 300;
+            console.log(c)
         }
     }
 
@@ -88,7 +91,27 @@ window.onload = function () {
                     },
                 
                     // Configuration options go here
-                    options: {}
+                    options: {
+                        responsive: true,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    fontSize: 40
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    fontSize: 24
+                                }
+                            }]
+                        },
+                        legend: {
+                            display: true,
+                            labels: {
+                                fontSize: 24
+                            }
+                        }
+                    }
                 });
                 console.log(chartDataObjects)
             }
