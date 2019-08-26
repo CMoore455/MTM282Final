@@ -4,7 +4,6 @@ const session = require('express-session')
 const app = express()
 const port = 3000
 
-
 // const MongoClient = require('mongodb').MongoClient;
 // const uri = "mongodb+srv://webfinaluser:<password>@number2mylord-hy3vz.mongodb.net/test?retryWrites=true&w=majority";
 // const client = new MongoClient(uri, { useNewUrlParser: true });

@@ -15,5 +15,20 @@ questionRouter.route('/questions').get(
     }
 )
 
+questionRouter.route('/responses').get(
+    function (request, response) {
+        models.User.aggregate([
+            { $unwind :'$responses'},
+            { $project : { _id:0,  question: '$responses.question', choice : '$responses.choice' } }
+          ], function(err, docs) {
+                response.send(docs)
+          });
+        // response.send(models.User.aggregate([
+        //     { $unwind :'$responses'},
+        //     { $project : { _id:0,  question: '$responses.question', choice : '$responses.choice' } }
+        // ]))
+    }
+)
+
 
 module.exports = questionRouter

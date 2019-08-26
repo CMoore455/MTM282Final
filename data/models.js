@@ -48,7 +48,7 @@ function getUiModel(pageTitle, pageHeader, request) {
 // Mongoose Schema represents a collection in the MongoDB
 // It is the skeleton of the model
 const questionSchema = new Schema({
-    question: String,
+    prompt: String,
     choices: [String]
 })
 

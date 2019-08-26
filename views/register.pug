@@ -15,4 +15,18 @@ block contentBlock
         div(class="formEntry")
             label(for="age")="Age"
             input(type="number", name="age")
+        - var questionCounter = 0
+        - var radioName = "question" + questionCounter
+        each question in questions
+            div(class="formEntry")
+                label(for="question1")=question.prompt
+                br
+                each choice in question.choices
+                    - var radioValue = question.prompt + ":" + choice
+                    input(id=radioName type="radio", name=radioName, value=radioValue)
+                    label(for=radioName)=choice
+                    br
+                - questionCounter += 1
+                - radioName = "question" + questionCounter 
+
         input(class="submit", type="submit", value="Complete Registration")
