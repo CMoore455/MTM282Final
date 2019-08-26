@@ -1,5 +1,10 @@
-canvas{
-
+canvas {
     width:600px !important;
     height:600px !important;
   }
+
+a:-webkit-any-link {
+    text-decoration: none;
+    color: black;
+    margin: 0px 20px;
+}

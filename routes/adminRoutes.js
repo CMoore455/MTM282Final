@@ -19,15 +19,12 @@ adminRouter.route('/login').get(
 
 adminRouter.route('/login').post(
     function(request, response) {
-        let postedUsernameOrEmail = request.body["usernameOrEmail"]
+        let postedUsernameOrEmail = request.body["usernameOrEmail"].toLowerCase()
         let postedPassword = request.body["password"]
-        console.log(request)
+        
         models.User.find( { $or: [{email: postedUsernameOrEmail}, {username: postedUsernameOrEmail}] }, function (err, docs) {
             if (docs.length){
-                console.log(postedPassword)
-                console.log(docs[0].password)
                 let success = bcrypt.compareSync(postedPassword, docs[0].password);
-                console.log(request)
                 if (success && docs[0].isActive) {
                     
                     request.session.username = docs[0].username
@@ -40,7 +37,7 @@ adminRouter.route('/login').post(
             }else{
             }
             
-        });      
+        });
      
     }
 )
@@ -115,31 +112,34 @@ adminRouter.route('/').get(
 
         // get all users
         promises.push(new Promise(function(resolve, reject) {
-            models.User.find( { username: { $not: "admin" } }, function (err, docs) {
-                if (docs.length) {
-                    model.allUsers = docs
+            models.User.find( { username: { $ne: "admin" } }, function (err, docs) {
+                if (err) return console.log(err)
+                if (docs && docs.length) {
+                    resolve(docs)
                 }
-                resolve(model)
             })
         }))
 
         promises.push(new Promise(function(resolve, reject) {
             models.Question.find({}, function (err, docs) {
+                if (err) return console.log(err)
                 if (docs.length) {
                     let questions = []
-                    for (let question in docs) {
+                    for (let question of docs) {
                         questions.push(question.prompt)
                     }
+                    resolve(questions)
                 }
-                resolve(questions)
             })
         }))
 
-
         Promise.all(promises).then( (dataArray) => {
-            console.log(dataArray)
-
-
+            console.log(dataArray[0])
+            console.log(dataArray[1])
+            model.allUsers = dataArray[0]
+            model.questions = dataArray[1]
+            console.log(model)
+            response.render("admin", model)
         })
     }
 )

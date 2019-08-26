@@ -31,7 +31,7 @@ function getUiModel(pageTitle, pageHeader, request) {
         pageTitle: pageTitle,
         pageHeader: pageHeader
     }
-    
+
     if (request) {
         if (request.session.username) {
             let user = {
