@@ -3,10 +3,12 @@ mixin userDetailMixin(user)
         //- table listing all of the users
         td=user.username
         td=user.email
-        td=user.isActive
-        td=user.isAdmin
+        td
+            input(type="checkbox", name="chkIsActive", selected=user.isActive)
+        td
+            input(type="checkbox", name="chkIsAdmin", selected=user.isAdmin)
         td=user.age
-        - console.log(user.responses)
-        if (user.responses && user.responses.length > 0)
-            each response in responses
+        if (user.responses)
+            each response in user.responses
                 td=response.choice
+        td=user._id

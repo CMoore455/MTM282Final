@@ -1,5 +1,6 @@
 extends layout.pug
 block contentBlock
+    script(src="scripts/admin.js")
     if allUsers
         table(class="usersTable")
             tr
@@ -8,9 +9,9 @@ block contentBlock
                 th="Is Active"
                 th="Is Admin"
                 th="Age"
-                th=`Response to: '${questions[0]}`
-                th=`Response to: '${questions[1]}`
-                th=`Response to: '${questions[2]}`
+                th=questions[0]
+                th=questions[1]
+                th=questions[2]
                 th="_id"
             each user in allUsers
                 include userDetailMixin.pug
