@@ -1,12 +1,17 @@
 mixin userDetailMixin(user)
     tr(class="userDetail")
-        //- table listing all of the users
         td=user.username
         td=user.email
         td
-            input(type="checkbox", name="chkIsActive", checked="false", onclick=`updateIsActive(${user._id})`)
+            if (user.isActive)
+                input(type="checkbox", name="chkIsActive", checked)
+            else
+                input(type="checkbox", name="chkIsActive")
         td
-            input(type="checkbox", name="chkIsAdmin", checked="true", onclick=`updateIsAdmin(${user._id})`)
+            if (user.isAdmin)
+                input(type="checkbox", name="chkIsAdmin", checked)
+            else
+                input(type="checkbox", name="chkIsAdmin")
         td=user.age
         if (user.responses)
             each response in user.responses

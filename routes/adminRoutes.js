@@ -175,7 +175,6 @@ function updateIsActive(user_id) {
             console.log(`updated user to: isActive=${user.isActive}`)
         })
     })
-
 }
 
 function updateIsAdmin(user_id) {
