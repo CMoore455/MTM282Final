@@ -25,16 +25,28 @@ adminRouter.route('/login').post(
         models.User.find( { $or: [{email: postedUsernameOrEmail}, {username: postedUsernameOrEmail}] }, function (err, docs) {
             if (docs.length){
                 let success = bcrypt.compareSync(postedPassword, docs[0].password);
-                if (success && docs[0].isActive) {
-                    
-                    request.session.username = docs[0].username
-                    request.session.isAdmin = docs[0].isAdmin
-                    request.session.secret = 'mirrors'
-                    response.redirect('/')
+                if (success) {
+                    if (docs[0].isActive) {
+                        request.session.username = docs[0].username
+                        request.session.isAdmin = docs[0].isAdmin
+                        request.session.secret = 'mirrors'
+                        
+                        if (docs[0].isAdmin) {
+                            response.redirect('admin')
+                        } else {
+                            response.redirect('/')
+                        }
+                    } else {
+                        // not active
+                        errorMessage = "Unable to log in because your account is in-active!"
+                        response.redirect('login')
+                    }
                 } else {
+                    // failed log-in
+                    errorMessage = "Wrong ID or password"
                     response.redirect('login')
                 }
-            }else{
+            } else {
             }
             
         });
