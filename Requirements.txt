@@ -9,7 +9,7 @@ On the home page, show bar charts for each of the multiple choice questions that
     You can create this chart by hand (think canvas/js) or use a library like ChartJs (Links to an external site.) to help you out
     The charts should be able to handle a number between 0-10 for each answer
 ---Create an admin account (user:admin, password:pass) along with several regular user accounts so I can see the data.
-Have a page that only the admin can see that shows a table listing all of the users, theirs user information and current status (active,  suspended.)
+---Have a page that only the admin can see that shows a table listing all of the users, theirs user information and current status (active,  suspended.)
 Give the admin user the ability to suspend/activate user accounts. 
 ---Suspended accounts should not be able to login and should get a message when they try (or redirect to another page)
 ---When someone is logged in, a session should be used to maintain that login status (use express-sessions)

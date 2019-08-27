@@ -32,25 +32,27 @@ adminRouter.route('/login').post(
                         request.session.secret = 'mirrors'
                         
                         if (docs[0].isAdmin) {
-                            response.redirect('admin')
+                            response.redirect('/admin')
+                            return
                         } else {
                             response.redirect('/')
+                            return
                         }
                     } else {
                         // not active
                         errorMessage = "Unable to log in because your account is in-active!"
                         response.redirect('login')
+                        return
                     }
-                } else {
-                    // failed log-in
-                    errorMessage = "Wrong ID or password"
-                    response.redirect('login')
                 }
-            } else {
             }
-            
+
+            // failed log-in
+            console.log("login failed")
+            errorMessage = "Wrong ID or password"
+            response.redirect('login')
+            return
         });
-     
     }
 )
 
@@ -146,11 +148,8 @@ adminRouter.route('/').get(
         }))
 
         Promise.all(promises).then( (dataArray) => {
-            console.log(dataArray[0])
-            console.log(dataArray[1])
             model.allUsers = dataArray[0]
             model.questions = dataArray[1]
-            console.log(model)
             response.render("admin", model)
         })
     }
