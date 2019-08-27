@@ -3,7 +3,7 @@
 ---Your database should be setup in the cloud instead of on your local machine. If you have trouble finding a FREE hosted MongoDB (Links to an external site.) instance, see me so I can help.
 Nothing should break if there is no data in the database
 You may only use the packages discussed in class demos or in this document
-Users can register for an account that stores username, password, user-level (regular user or admin), email, age, and the answers to three multiple choice questions that you come up with.
+---Users can register for an account that stores username, password, user-level (regular user or admin), email, age, and the answers to three multiple choice questions that you come up with.
 ---Passwords must be salted and hashed (use bcrypt-nodejs (Links to an external site.))
 On the home page, show bar charts for each of the multiple choice questions that shows how many people selected each answer.
     You can create this chart by hand (think canvas/js) or use a library like ChartJs (Links to an external site.) to help you out
@@ -11,10 +11,10 @@ On the home page, show bar charts for each of the multiple choice questions that
 ---Create an admin account (user:admin, password:pass) along with several regular user accounts so I can see the data.
 Have a page that only the admin can see that shows a table listing all of the users, theirs user information and current status (active,  suspended.)
 Give the admin user the ability to suspend/activate user accounts. 
-Suspended accounts should not be able to login and should get a message when they try (or redirect to another page)
-When someone is logged in, a session should be used to maintain that login status (use express-sessions)
+---Suspended accounts should not be able to login and should get a message when they try (or redirect to another page)
+---When someone is logged in, a session should be used to maintain that login status (use express-sessions)
 If user is logged in:
-Hide the login link/button
-Should have a logout button that destroys the session and removes the ability to modify records
+---Hide the login link/button
+---Should have a logout button that destroys the session and removes the ability to modify records
 Show a link to the user's profile
 On the profile page the user should be able to edit/update their user information
