@@ -212,13 +212,13 @@ adminRouter.route('/profile').get(
         models.User.find({username: request.session.username}, function(err, users){
             let model = models.getUiModel("Mirrors - Profile", "Profile", request)
             models.Question.find({}, function (err, questions){
-                
+
                 model.user = users[0]
                 model.questions = questions
                 console.log(users[0])
                 response.render("profile", model)
             })
-           
+
         })
     }
 )
