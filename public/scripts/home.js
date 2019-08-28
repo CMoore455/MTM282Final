@@ -84,7 +84,7 @@ window.onload = function () {
                         labels: Object.keys(chartDataObjects[i].choicesAndNumOfTimesPicked),
                         datasets: [{
                             label: chartDataObjects[i].question,
-                            backgroundColor: 'rgb(255, 99, 132)',
+                            backgroundColor: 'rgb(120, 99, 132)',
                             borderColor: 'rgb(255, 99, 132)',
                             data: Object.values(chartDataObjects[i].choicesAndNumOfTimesPicked)
                         }]

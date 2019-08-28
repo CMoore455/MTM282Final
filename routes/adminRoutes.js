@@ -19,7 +19,7 @@ adminRouter.route('/login').get(
 
 adminRouter.route('/login').post(
     function(request, response) {
-        let postedUsernameOrEmail = request.body["usernameOrEmail"].toLowerCase()
+        let postedUsernameOrEmail = request.body["usernameOrEmail"]
         let postedPassword = request.body["password"]
 
         models.User.find( { $or: [{email: postedUsernameOrEmail}, {username: postedUsernameOrEmail}] }, function (err, docs) {
@@ -109,7 +109,10 @@ adminRouter.route('/register').post(
                         response.redirect("register")
                         return console.error(err);
                     }
-                    response.redirect("/")
+                    request.session.username = newUser.username
+                    request.session.isAdmin = newUser.isAdmin
+                    request.session.secret = 'mirrors'
+                    response.redirect('/')
                     console.log('--- User saved ---')
                 });
             }
@@ -204,33 +207,20 @@ adminRouter.route('/logout').get(
         response.render("logout", model)
 })
 
-function updateIsActive(user_id) {
-    console.log("updating user active status")
-
-    // find user by _id
-    models.User.find( { _id: user_id } , function (err, user) {
-        if (err) return console.log(err)
-
-        user.isActive = !user.isActive
-        user.save(function(err){
-            if (err) return console.log(err)
-            console.log(`updated user to: isActive=${user.isActive}`)
+adminRouter.route('/profile').get(
+    function(request, response) {
+        models.User.find({username: request.session.username}, function(err, users){
+            let model = models.getUiModel("Mirrors - Profile", "Profile", request)
+            models.Question.find({}, function (err, questions){
+                
+                model.user = users[0]
+                model.questions = questions
+                console.log(users[0])
+                response.render("profile", model)
+            })
+           
         })
-    })
-}
-
-function updateIsAdmin(user_id) {
-    console.log("updating user admin status")
-    // find user by _id
-    models.User.find( { _id: user_id } , function (err, user) {
-        if (err) return console.log(err)
-
-        user.isAdmin = !user.isAdmin
-        user.save(function(err){
-            if (err) return console.log(err)
-            console.log(`updated user to: isAdmin=${user.isAdmin}`)
-        })
-    })
-}
+    }
+)
 
 module.exports = adminRouter

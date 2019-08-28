@@ -5,9 +5,9 @@ Nothing should break if there is no data in the database
 You may only use the packages discussed in class demos or in this document
 ---Users can register for an account that stores username, password, user-level (regular user or admin), email, age, and the answers to three multiple choice questions that you come up with.
 ---Passwords must be salted and hashed (use bcrypt-nodejs (Links to an external site.))
-On the home page, show bar charts for each of the multiple choice questions that shows how many people selected each answer.
-    You can create this chart by hand (think canvas/js) or use a library like ChartJs (Links to an external site.) to help you out
-    The charts should be able to handle a number between 0-10 for each answer
+---On the home page, show bar charts for each of the multiple choice questions that shows how many people selected each answer.
+---You can create this chart by hand (think canvas/js) or use a library like ChartJs (Links to an external site.) to help you out
+---The charts should be able to handle a number between 0-10 for each answer
 ---Create an admin account (user:admin, password:pass) along with several regular user accounts so I can see the data.
 ---Have a page that only the admin can see that shows a table listing all of the users, theirs user information and current status (active,  suspended.)
 Give the admin user the ability to suspend/activate user accounts. 
