@@ -25,20 +25,34 @@ adminRouter.route('/login').post(
         models.User.find( { $or: [{email: postedUsernameOrEmail}, {username: postedUsernameOrEmail}] }, function (err, docs) {
             if (docs.length){
                 let success = bcrypt.compareSync(postedPassword, docs[0].password);
-                if (success && docs[0].isActive) {
-                    
-                    request.session.username = docs[0].username
-                    request.session.isAdmin = docs[0].isAdmin
-                    request.session.secret = 'mirrors'
-                    response.redirect('/')
-                } else {
-                    response.redirect('login')
+                if (success) {
+                    if (docs[0].isActive) {
+                        request.session.username = docs[0].username
+                        request.session.isAdmin = docs[0].isAdmin
+                        request.session.secret = 'mirrors'
+                        
+                        if (docs[0].isAdmin) {
+                            response.redirect('/admin')
+                            return
+                        } else {
+                            response.redirect('/')
+                            return
+                        }
+                    } else {
+                        // not active
+                        errorMessage = "Unable to log in because your account is in-active!"
+                        response.redirect('login')
+                        return
+                    }
                 }
-            }else{
             }
-            
+
+            // failed log-in
+            console.log("login failed")
+            errorMessage = "Wrong ID or password"
+            response.redirect('login')
+            return
         });
-     
     }
 )
 
@@ -110,6 +124,13 @@ adminRouter.route('/register').post(
 // Give the admin user the ability to suspend/activate user accounts. 
 adminRouter.route('/').get(
     function(request, response) {
+        if (!request.session.username || !request.session.isAdmin) {
+            // not logged in or is not admin
+            // alert("You must be an admin to view that page!")
+            response.redirect('/')
+            return
+        }
+
         let model = models.getUiModel("Admin Page", "Admin Page", request)
         let promises = []
 
@@ -137,13 +158,41 @@ adminRouter.route('/').get(
         }))
 
         Promise.all(promises).then( (dataArray) => {
-            console.log(dataArray[0])
-            console.log(dataArray[1])
             model.allUsers = dataArray[0]
             model.questions = dataArray[1]
-            console.log(model)
             response.render("admin", model)
+            return
         })
+    }
+)
+
+adminRouter.route('/update').post(
+    function(request, response) {
+        
+
+        if ( (request.query.wasActive != request.body['chkIsActive'] )  ||   request.body['chkIsAdmin']  ) {
+            // update one or both fields
+            let dbPromise = new Promise(function(resolve, reject) {
+                models.User.find({ _id: request.query.userId }, function (err, users) {
+                    if (err) return console.log(err)
+                    resolve(users[0])
+                })
+            })
+
+            dbPromise.then( (dbUser) => {
+                dbUser.isActive = request.body['chkIsActive'] ? !dbUser.isActive: dbUser.isActive
+                dbUser.isAdmin = request.body['chkIsAdmin'] ? !dbUser.isAdmin: dbUser.isAdmin
+                dbUser.save(function(err) {
+                    if (err) return console.log(err)
+                    
+                    response.redirect('/admin')
+                    return
+                })
+            })
+        } else {
+            response.redirect('/admin')
+            return
+        }
     }
 )
 
