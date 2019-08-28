@@ -1,19 +1,24 @@
 mixin userDetailMixin(user)
-    tr(class="userDetail")
-        td=user.username
-        td=user.email
-        td
-            if (user.isActive)
-                input(type="checkbox", name="chkIsActive", checked)
+        form(class="tableRow", action=`/admin/update/?userId=${user._id}&wasActive=${user.isActive}&wasAdmin=${user.isAdmin}`, method="post")
+            div(class="tableCell")=user.username
+            div(class="tableCell")=user.email
+            div(class="tableCell")
+                if (user.isActive)
+                    input(type="checkbox", name="chkIsActive", checked)
+                else
+                    input(type="checkbox", name="chkIsActive")
+            div(class="tableCell")
+                if (user.isAdmin)
+                    input(type="checkbox", name="chkIsAdmin", checked)
+                else
+                    input(type="checkbox", name="chkIsAdmin")
+            div(class="tableCell")=user.age
+            if (user.responses && user.responses.length == 3)
+                each response in user.responses
+                    div(class="tableCell")=response.choice
             else
-                input(type="checkbox", name="chkIsActive")
-        td
-            if (user.isAdmin)
-                input(type="checkbox", name="chkIsAdmin", checked)
-            else
-                input(type="checkbox", name="chkIsAdmin")
-        td=user.age
-        if (user.responses)
-            each response in user.responses
-                td=response.choice
-        td=user._id
+                div(class="tableCell")
+                div(class="tableCell")
+                div(class="tableCell")
+            div(class="tableCell")=user._id
+            input(type="submit", value="Save")

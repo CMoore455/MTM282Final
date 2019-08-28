@@ -121,6 +121,13 @@ adminRouter.route('/register').post(
 // Give the admin user the ability to suspend/activate user accounts. 
 adminRouter.route('/').get(
     function(request, response) {
+        if (!request.session.username || !request.session.isAdmin) {
+            // not logged in or is not admin
+            // alert("You must be an admin to view that page!")
+            response.redirect('/')
+            return
+        }
+
         let model = models.getUiModel("Admin Page", "Admin Page", request)
         let promises = []
 
@@ -151,7 +158,38 @@ adminRouter.route('/').get(
             model.allUsers = dataArray[0]
             model.questions = dataArray[1]
             response.render("admin", model)
+            return
         })
+    }
+)
+
+adminRouter.route('/update').post(
+    function(request, response) {
+        
+
+        if ( (request.query.wasActive != request.body['chkIsActive'] )  ||   request.body['chkIsAdmin']  ) {
+            // update one or both fields
+            let dbPromise = new Promise(function(resolve, reject) {
+                models.User.find({ _id: request.query.userId }, function (err, users) {
+                    if (err) return console.log(err)
+                    resolve(users[0])
+                })
+            })
+
+            dbPromise.then( (dbUser) => {
+                dbUser.isActive = request.body['chkIsActive'] ? !dbUser.isActive: dbUser.isActive
+                dbUser.isAdmin = request.body['chkIsAdmin'] ? !dbUser.isAdmin: dbUser.isAdmin
+                dbUser.save(function(err) {
+                    if (err) return console.log(err)
+                    
+                    response.redirect('/admin')
+                    return
+                })
+            })
+        } else {
+            response.redirect('/admin')
+            return
+        }
     }
 )
 
