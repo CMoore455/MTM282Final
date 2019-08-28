@@ -1,29 +1,32 @@
 extends layout.pug
 block contentBlock
     h3=user.username
-    form
-    label(for="username")="Username: "
-    input(type="text", name="username", value=user.username)
-    br
-    label(for="email")="Email: "
-    input(type="text", name="email", value=user.email)
-    br
-    label(for="email")="Email: "
-    input(type="text", name="email", value=user.email)
-    br
-    label(for="newPassword")="New Password: "
-    input(type="password", name="newPassword")
-    br
-    - var questionCounter = 0
-    - var radioName = "question" + questionCounter
-    each question in questions
-        div(class="formEntry")
-            label(for="question1")=question.prompt
-            br
-            each choice in question.choices
-                - var radioValue = question.prompt + ":" + choice
-                input(id=radioName type="radio", name=radioName, value=radioValue)
-                label(for=radioName)=choice
+    form(action="/admin/profile", method="post")
+        label(for="username")="Username: "
+        input(type="text", name="username", value=user.username)
+        br
+        label(for="email")="Email: "
+        input(type="text", name="email", value=user.email)
+        br
+        label(for="newPassword")="New Password: "
+        input(type="password", name="newPassword")
+        br
+        - var questionCounter = 0
+        - var radioName = "question" + questionCounter
+        each question in questions
+            div(class="formEntry")
+                label(for="question1")=question.prompt
                 br
-            - questionCounter += 1
-            - radioName = "question" + questionCounter 
+                each choice in question.choices
+                    - var radioValue = question.prompt + ":" + choice
+                    each response in user.responses
+                        if response.question == question.prompt
+                            if response.choice == choice
+                                input(id=radioName type="radio", name=radioName, value=radioValue, checked)
+                            else
+                                input(id=radioName type="radio", name=radioName, value=radioValue)
+                    label(for=radioName)=choice
+                    br
+                - questionCounter += 1
+                - radioName = "question" + questionCounter 
+        input(type="submit", value="Save")

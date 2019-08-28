@@ -66,10 +66,10 @@ window.onload = function () {
                 console.log(newChartData)
                 chartDataObjects.push(newChartData)
             }
-            for(let i = 0; i < responsesJson.length; i++){
-                for(let j = 0; j < chartDataObjects.length; j++){
-                    if (chartDataObjects[j].question == responsesJson[i].question) {
-                        chartDataObjects[j].choicesAndNumOfTimesPicked[responsesJson[i].choice]++
+            for(let i = 0; i < chartDataObjects.length; i++){
+                for(let j = 0; j < responsesJson.length; j++){
+                    if (chartDataObjects[i].question == responsesJson[j].question) {
+                        chartDataObjects[i].choicesAndNumOfTimesPicked[responsesJson[j].choice]++
                     }
                 }
             }
@@ -113,7 +113,8 @@ window.onload = function () {
                         }
                     }
                 });
-                console.log(chartDataObjects)
+                console.log(Object.keys(chartDataObjects[i].choicesAndNumOfTimesPicked))
+                console.log(Object.values(chartDataObjects[i].choicesAndNumOfTimesPicked))
             }
             
         })

@@ -223,4 +223,36 @@ adminRouter.route('/profile').get(
     }
 )
 
+adminRouter.route('/profile').post(
+    function(request, response) {
+        var numOfQuestions = 3
+        var userResponses = []
+        for (let i = 0; i < numOfQuestions; i++){
+            splitArray = request.body["question"+i].split(":")
+            userResponses.push({
+                question: splitArray[0],
+                choice: splitArray[1]
+            })
+        }
+        let newPassword = request.body.newPassword
+        
+        let userUpdates = {
+            username: request.body.username,
+            email: request.body.email,
+            responses: userResponses
+        }
+        if (newPassword!==""){
+            var salt = bcrypt.genSaltSync(10);
+            var hash = bcrypt.hashSync(newPassword, salt);   
+            userUpdates.password = hash 
+        }
+        models.User.updateOne({username: request.session.username}, userUpdates,
+             function(err, numberAffected, rawResponse) {
+                console.log("--User Updated--")
+                response.redirect('/profile')
+           //handle it
+        })
+    }
+)
+
 module.exports = adminRouter
