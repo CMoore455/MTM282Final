@@ -1,13 +1,13 @@
 extends layout.pug
 block contentBlock
     if errorMessage
-        h2(class="text-red-600 my-6")=errorMessage
-    form(action="/admin/login", method="post")
-        div(class="formEntry")
+        h2(class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative")=errorMessage
+    form(action="/admin/login", method="post", class="inline-block w-full max-w-sm")
+        div(class="my-8 text-lg")
             label(for="usernameOrEmail")="Username or Email"
-            input(type="text", name="usernameOrEmail")
-        div(class="formEntry")
+            input(class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-400", type="text", name="usernameOrEmail")
+        div(class="my-8 text-lg")
             label(for="password")="Password"
-            input(type="password", name="password")
-        input(type="submit", value="Verify Log In")
-    a(href="/admin/register")="Register"
+            input(class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-400", type="password", name="password")
+        input(class="shadow mr-10 bg-teal-400 hover:bg-teal-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded", type="submit", value="Verify Log In")
+        a(class="inline-flex", href="/admin/register")="Register"

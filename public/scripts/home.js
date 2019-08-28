@@ -17,6 +17,7 @@ window.onload = function () {
             var newCanvas = document.createElement("CANVAS");
             let newId = "canvas" + i
             newCanvas.setAttribute('id', newId)
+            newCanvas.setAttribute('class', "object-scale-down ")
             canvasCTXs.push(newCanvas.getContext('2d'))
             questionsChartsDiv.appendChild(newCanvas)
             let c = document.getElementById(newId)
@@ -48,7 +49,7 @@ window.onload = function () {
             request.open(method, url, true);
             request.send();
         });
-        promise.catch(function(error) {      
+        promise.catch(function(error) {
           });
         return promise
     };    

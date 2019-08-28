@@ -4,6 +4,7 @@
   "description": "This is the final project for the MTM282 class. This site is \"selling\" mirrors.",
   "main": "app.js",
   "scripts": {
+    "css": "npx tailwind build ./public/styles/styles.css -o ./public/styles/site.css",
     "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,9 +1,9 @@
 extends layout.pug
 block contentBlock
     if allUsers
-        div(class="usersTable")
-            div(class="tableBody")
-                div(class="tableRow")
+        div(class="usersTable inline-flex w-full max-w-sm")
+            div(class="tableBody m-auto")
+                div(class="tableRow my-8 text-lg")
                     div(class="tableCell")="Username"
                     div(class="tableCell")="Email"
                     div(class="tableCell")="Is Active"
@@ -17,4 +17,4 @@ block contentBlock
                     include userDetailMixin.pug
                     +userDetailMixin(user)
     else
-        h2=errorMessage
+        h2(class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative")=errorMessage
