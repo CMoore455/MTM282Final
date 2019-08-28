@@ -1,12 +1,12 @@
-nav
+nav(class="flex items-center justify-between flex-wrap bg-teal-400 p-6")
     //- logic to determine if we should display login/register or logout
-    a(href="/home")="Number 2 My Lord"
-    if user
-        a(href="/admin/profile")=user.username
-        if user.isAdmin
-            a(href="/admin/")="Manage Users"
-        a(href="/admin/logout")="Log Out"
-    else
-        a(href="/admin/login")="Log In"
-        a(href="/admin/register")="Register"
-    a(href="")=""
+    div(class="flex items-center flex-shrink-0 text-white mr-6")
+        a(href="/home", class="text-black font-semibold tracking-wide text-xl mr-24")="Number 2 My Lord"
+        if user
+            a(href="/admin/profile", class="mx-6")=user.username
+            if user.isAdmin
+                a(href="/admin/", class="mx-6")="Manage Users"
+            a(href="/admin/logout", class="mx-6")="Log Out"
+        else
+            a(href="/admin/login", class="mx-6")="Log In"
+            a(href="/admin/register", class="mx-6")="Register"

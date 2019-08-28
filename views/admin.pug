@@ -16,3 +16,5 @@ block contentBlock
                 each user in allUsers
                     include userDetailMixin.pug
                     +userDetailMixin(user)
+    else
+        h2=errorMessage

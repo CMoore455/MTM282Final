@@ -49,7 +49,7 @@ adminRouter.route('/login').post(
 
             // failed log-in
             console.log("login failed")
-            errorMessage = "Wrong ID or password"
+            errorMessage = "Wrong username or password"
             response.redirect('login')
             return
         });
@@ -138,8 +138,12 @@ adminRouter.route('/').get(
         promises.push(new Promise(function(resolve, reject) {
             models.User.find( { username: { $ne: "admin" } }, function (err, docs) {
                 if (err) return console.log(err)
-                if (docs && docs.length) {
-                    resolve(docs)
+                if (docs) {
+                    if (docs.length) {
+                        resolve(docs)
+                    } else {
+                        resolve(null)
+                    }
                 }
             })
         }))
@@ -147,18 +151,27 @@ adminRouter.route('/').get(
         promises.push(new Promise(function(resolve, reject) {
             models.Question.find({}, function (err, docs) {
                 if (err) return console.log(err)
-                if (docs.length) {
+                if (docs) {
                     let questions = []
-                    for (let question of docs) {
-                        questions.push(question.prompt)
+                    if (docs.length) {
+                        for (let question of docs) {
+                            questions.push(question.prompt)
+                        }
+                        resolve(questions)
                     }
-                    resolve(questions)
+                } else {
+                    resolve( ["", "", ""] )
                 }
             })
         }))
 
         Promise.all(promises).then( (dataArray) => {
-            model.allUsers = dataArray[0]
+            if (dataArray[0] == null) {
+                model.errorMessage = "No users to display"
+            } else {
+                model.allUsers = dataArray[0]
+            }
+
             model.questions = dataArray[1]
             response.render("admin", model)
             return
@@ -235,7 +248,7 @@ adminRouter.route('/profile').post(
             })
         }
         let newPassword = request.body.newPassword
-        
+
         let userUpdates = {
             username: request.body.username,
             email: request.body.email,
@@ -243,8 +256,8 @@ adminRouter.route('/profile').post(
         }
         if (newPassword!==""){
             var salt = bcrypt.genSaltSync(10);
-            var hash = bcrypt.hashSync(newPassword, salt);   
-            userUpdates.password = hash 
+            var hash = bcrypt.hashSync(newPassword, salt);
+            userUpdates.password = hash
         }
         models.User.updateOne({username: request.session.username}, userUpdates,
              function(err, numberAffected, rawResponse) {

@@ -62,7 +62,7 @@ const responseSchema = new Schema({
 
 const userSchema = new Schema({
     username: String,
-    password: String, 
+    password: String,
     email: String,
     age: Number,
     isAdmin: Boolean,
@@ -72,9 +72,9 @@ const userSchema = new Schema({
 
 const User = mongoose.model('User', userSchema, "users")
 
-module.exports = 
+module.exports =
     {
-        getUiModel, 
+        getUiModel,
         User,
         Question
     }

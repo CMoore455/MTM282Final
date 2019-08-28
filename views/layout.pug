@@ -1,10 +1,11 @@
-html
+html(lang="en", class="")
     head
         title=pageTitle
-        link(href="/styles/site.css", rel="stylesheet", type="text/css")
+        link(href="/styles/tailwind.min.css" rel="stylesheet")
         block scripts
     body
         include nav.pug
-        h1=pageHeader
-        block contentBlock
-    footer='Created in 2019 by Christian Moore and Kyle Murphy'
+        div(class="p-8")
+            h1(class="text-2xl tracking-wider")=pageHeader
+            block contentBlock
+        footer(class="p-8")='Created in 2019 by Christian Moore and Kyle Murphy'

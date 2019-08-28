@@ -1,7 +1,7 @@
 extends layout.pug
 block contentBlock
     if errorMessage
-        h2=errorMessage
+        h2(class="text-red-600 my-6")=errorMessage
     form(action="/admin/login", method="post")
         div(class="formEntry")
             label(for="usernameOrEmail")="Username or Email"
