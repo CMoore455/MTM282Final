@@ -21,7 +21,7 @@ adminRouter.route('/login').post(
     function(request, response) {
         let postedUsernameOrEmail = request.body["usernameOrEmail"].toLowerCase()
         let postedPassword = request.body["password"]
-        
+
         models.User.find( { $or: [{email: postedUsernameOrEmail}, {username: postedUsernameOrEmail}] }, function (err, docs) {
             if (docs.length){
                 let success = bcrypt.compareSync(postedPassword, docs[0].password);
@@ -30,7 +30,7 @@ adminRouter.route('/login').post(
                         request.session.username = docs[0].username
                         request.session.isAdmin = docs[0].isAdmin
                         request.session.secret = 'mirrors'
-                        
+
                         if (docs[0].isAdmin) {
                             response.redirect('/admin')
                             return
@@ -68,9 +68,9 @@ adminRouter.route('/register').get(
                 }
                 response.render("register", model)
             }
-            
+
         })
-       
+
     }
 )
 
@@ -118,7 +118,7 @@ adminRouter.route('/register').post(
 )
 
 // Shows a table listing all of the users, theirs user information and current status (active,  suspended.)
-// Give the admin user the ability to suspend/activate user accounts. 
+// Give the admin user the ability to suspend/activate user accounts.
 adminRouter.route('/').get(
     function(request, response) {
         if (!request.session.username || !request.session.isAdmin) {
@@ -165,9 +165,13 @@ adminRouter.route('/').get(
 
 adminRouter.route('/update').post(
     function(request, response) {
-        
+        // check if the body object has changed
+        //                                  ACTIVE      ==      NOT EXISTS                  RETURN TRUE
+        //                                  ACTIVE      ==      EXISTS                      RETURN FALSE
+        let changeActiveStatus = (request.query.wasActive == (request.body['chkIsActive'] ? true : false) ? false : true)
+        let changeAdminStatus = (request.query.wasAdmin == (request.body['chkIsAdmin'] ? true : false) ? false : true)
 
-        if ( (request.query.wasActive != request.body['chkIsActive'] )  ||   request.body['chkIsAdmin']  ) {
+        if (changeActiveStatus || changeAdminStatus) {
             // update one or both fields
             let dbPromise = new Promise(function(resolve, reject) {
                 models.User.find({ _id: request.query.userId }, function (err, users) {
@@ -177,11 +181,11 @@ adminRouter.route('/update').post(
             })
 
             dbPromise.then( (dbUser) => {
-                dbUser.isActive = request.body['chkIsActive'] ? !dbUser.isActive: dbUser.isActive
-                dbUser.isAdmin = request.body['chkIsAdmin'] ? !dbUser.isAdmin: dbUser.isAdmin
+                dbUser.isActive = changeActiveStatus ? !dbUser.isActive: dbUser.isActive
+                dbUser.isAdmin = changeAdminStatus ? !dbUser.isAdmin: dbUser.isAdmin
                 dbUser.save(function(err) {
                     if (err) return console.log(err)
-                    
+
                     response.redirect('/admin')
                     return
                 })
