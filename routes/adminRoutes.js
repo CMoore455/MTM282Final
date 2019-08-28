@@ -19,7 +19,7 @@ adminRouter.route('/login').get(
 
 adminRouter.route('/login').post(
     function(request, response) {
-        let postedUsernameOrEmail = request.body["usernameOrEmail"].toLowerCase()
+        let postedUsernameOrEmail = request.body["usernameOrEmail"]
         let postedPassword = request.body["password"]
         
         models.User.find( { $or: [{email: postedUsernameOrEmail}, {username: postedUsernameOrEmail}] }, function (err, docs) {
@@ -95,7 +95,10 @@ adminRouter.route('/register').post(
                         response.redirect("register")
                         return console.error(err);
                     }
-                    response.redirect("/")
+                    request.session.username = newUser.username
+                    request.session.isAdmin = newUser.isAdmin
+                    request.session.secret = 'mirrors'
+                    response.redirect('/')
                     console.log('--- User saved ---')
                 });
             }
@@ -151,5 +154,20 @@ adminRouter.route('/logout').get(
         response.render("logout", model)
 })
 
+adminRouter.route('/profile').get(
+    function(request, response) {
+        models.User.find({username: request.session.username}, function(err, users){
+            let model = models.getUiModel("Mirrors - Profile", "Profile", request)
+            models.Question.find({}, function (err, questions){
+                
+                model.user = users[0]
+                model.questions = questions
+                console.log(users[0])
+                response.render("profile", model)
+            })
+           
+        })
+    }
+)
 
 module.exports = adminRouter

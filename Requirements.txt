@@ -16,5 +16,5 @@ When someone is logged in, a session should be used to maintain that login statu
 If user is logged in:
 Hide the login link/button
 ---Should have a logout button that destroys the session and removes the ability to modify records
-Show a link to the user's profile
+---Show a link to the user's profile
 On the profile page the user should be able to edit/update their user information
