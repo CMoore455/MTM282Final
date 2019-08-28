@@ -22,7 +22,12 @@ block contentBlock
             br
             each choice in question.choices
                 - var radioValue = question.prompt + ":" + choice
-                input(id=radioName type="radio", name=radioName, value=radioValue)
+                each response in user.responses
+                    if response.question == question.prompt
+                        if response.choice == choice
+                            input(id=radioName type="radio", name=radioName, value=radioValue, checked)
+                        else
+                            input(id=radioName type="radio", name=radioName, value=radioValue)
                 label(for=radioName)=choice
                 br
             - questionCounter += 1
