@@ -1,32 +1,38 @@
 extends layout.pug
 block contentBlock
     h3=user.username
-    form(action="/admin/profile", method="post")
-        label(for="username")="Username: "
-        input(type="text", name="username", value=user.username)
+    form(action="/admin/profile", method="post", class="inline-block w-full max-w-sm")
+        div(class="my-8 text-lg")
+            label(for="username")="Username: "
+            input(type="text", name="username",class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-400",
+            value=user.username)
         br
-        label(for="email")="Email: "
-        input(type="text", name="email", value=user.email)
+        div(class="my-8 text-lg")
+            label(for="email", )="Email: "
+            input(type="text", name="email", class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-400", value=user.email)
         br
-        label(for="newPassword")="New Password: "
-        input(type="password", name="newPassword")
+        div(class="my-8 text-lg")
+            label(for="newPassword")="New Password: "
+            input(type="password", name="newPassword",  class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-teal-400")
         br
+        
         - var questionCounter = 0
         - var radioName = "question" + questionCounter
         each question in questions
-            div(class="formEntry")
-                label(for="question1")=question.prompt
-                br
-                each choice in question.choices
-                    - var radioValue = question.prompt + ":" + choice
-                    each response in user.responses
-                        if response.question == question.prompt
-                            if response.choice == choice
-                                input(id=radioName type="radio", name=radioName, value=radioValue, checked)
-                            else
-                                input(id=radioName type="radio", name=radioName, value=radioValue)
-                    label(for=radioName)=choice
+            div(class="my-8 text-lg")
+                    label(for="question1")=question.prompt
                     br
-                - questionCounter += 1
-                - radioName = "question" + questionCounter 
-        input(type="submit", value="Save")
+                    each choice in question.choices
+                        - var radioValue = question.prompt + ":" + choice
+                        div(class="m-6 ")
+                        each response in user.responses
+                            if response.question == question.prompt
+                                if response.choice == choice
+                                    input(class="m-2", id=radioName type="radio", name=radioName, value=radioValue, checked)
+                                else
+                                    input(class="m-2", id=radioName type="radio", name=radioName, value=radioValue)
+                        label(for=radioName)=choice
+                        br
+                    - questionCounter += 1
+                    - radioName = "question" + questionCounter 
+        input(class="shadow bg-teal-400 hover:bg-teal-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded", type="submit", value="Save")
