@@ -1,20 +1,19 @@
 extends layout.pug
 block contentBlock
     if allUsers
-        div(class="usersTable inline-flex w-full max-w-sm")
-            div(class="tableBody m-auto")
-                div(class="tableRow my-8 text-lg")
-                    div(class="tableCell")="Username"
-                    div(class="tableCell")="Email"
-                    div(class="tableCell")="Is Active"
-                    div(class="tableCell")="Is Admin"
-                    div(class="tableCell")="Age"
-                    div(class="tableCell")=questions[0]
-                    div(class="tableCell")=questions[1]
-                    div(class="tableCell")=questions[2]
-                    div(class="tableCell")="_id"
-                each user in allUsers
-                    include userDetailMixin.pug
-                    +userDetailMixin(user)
+        div(class="usersTable flex flex-wrap w-full")
+            div(class="tableRow my-8 text-lg")
+                div(class="tableCell flex-1 align-middle text-center")="Username"
+                div(class="tableCell flex-1 align-middle text-center")="Email"
+                div(class="tableCell flex-1 align-middle text-center")="Is Active"
+                div(class="tableCell flex-1 align-middle text-center")="Is Admin"
+                div(class="tableCell flex-1 align-middle text-center")="Age"
+                div(class="tableCell flex-1 align-middle text-center")=questions[0]
+                div(class="tableCell flex-1 align-middle text-center")=questions[1]
+                div(class="tableCell flex-1 align-middle text-center")=questions[2]
+                div(class="tableCell flex-1 align-middle text-center")="_id"
+            each user in allUsers
+                include userDetailMixin.pug
+                +userDetailMixin(user)
     else
         h2(class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative")=errorMessage
