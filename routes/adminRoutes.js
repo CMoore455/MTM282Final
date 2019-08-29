@@ -101,7 +101,7 @@ adminRouter.route('/register').post(
         )
         models.User.find( { $or: [{email: newUser.email}, {username: newUser.username}] }, function (err, docs) {
             if (docs.length){
-                errorMessage = 'Email or username exist already'
+                errorMessage = 'Email or username already exists'
                 response.redirect("register")
             }else{
                 newUser.save(function (err, fluffy) {
@@ -184,9 +184,19 @@ adminRouter.route('/update').post(
         // check if the body object has changed
         //                                  ACTIVE      ==      NOT EXISTS                  RETURN TRUE
         //                                  ACTIVE      ==      EXISTS                      RETURN FALSE
-        let changeActiveStatus = (request.query.wasActive == (request.body['chkIsActive'] ? true : false) ? false : true)
-        let changeAdminStatus = (request.query.wasAdmin == (request.body['chkIsAdmin'] ? true : false) ? false : true)
 
+        let chkIsActive = request.body['chkIsActive'] ? true : false
+        let chkIsAdmin = request.body['chkIsAdmin'] ? true : false
+        let wasActive = parseBool(request.query.wasActive)
+        let wasAdmin = parseBool(request.query.wasAdmin)
+        let changeActiveStatus = wasActive == chkIsActive ? false : true
+        let changeAdminStatus = wasAdmin == chkIsAdmin ? false : true
+        console.log("wasActive : isActive")
+        console.log(`${wasActive} == ${chkIsActive} -> change: ${changeActiveStatus}`)
+        // console.log(`change active status: ${changeActiveStatus}`)
+        console.log("wasAdmin : isAdmin")
+        console.log(`${wasAdmin} == ${chkIsAdmin} -> change: ${changeAdminStatus}`)
+        // console.log(`change admin status: ${changeAdminStatus}`)
         if (changeActiveStatus || changeAdminStatus) {
             // update one or both fields
             let dbPromise = new Promise(function(resolve, reject) {

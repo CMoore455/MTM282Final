@@ -1,24 +1,25 @@
 mixin userDetailMixin(user)
-        form(class="tableRow", action=`/admin/update/?userId=${user._id}&wasActive=${user.isActive}&wasAdmin=${user.isAdmin}`, method="post")
-            div(class="tableCell")=user.username
-            div(class="tableCell")=user.email
-            div(class="tableCell")
+        form(class="tableRow flex flex-wrap w-full", action=`/admin/update/?userId=${user._id}&wasActive=${user.isActive}&wasAdmin=${user.isAdmin}`, method="post")
+            div(class="tableCell h-20 flex-1 align-middle text-center")=user.username
+            div(class="tableCell h-20 flex-1 align-middle text-center")=user.email
+            div(class="tableCell h-20 flex-1 align-middle text-center")
                 if (user.isActive)
                     input(type="checkbox", name="chkIsActive", checked)
                 else
                     input(type="checkbox", name="chkIsActive")
-            div(class="tableCell")
+            div(class="tableCell h-20 flex-1 align-middle text-center")
                 if (user.isAdmin)
                     input(type="checkbox", name="chkIsAdmin", checked)
                 else
                     input(type="checkbox", name="chkIsAdmin")
-            div(class="tableCell")=user.age
+            div(class="tableCell h-20 flex-1 align-middle text-center")=user.age
             if (user.responses && user.responses.length == 3)
                 each response in user.responses
-                    div(class="tableCell")=response.choice
+                    div(class="tableCell h-20 flex-1 align-middle text-center")=response.choice
             else
-                div(class="tableCell")
-                div(class="tableCell")
-                div(class="tableCell")
-            div(class="tableCell")=user._id
-            input(class="shadow bg-teal-400 hover:bg-teal-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded", type="submit", value="Save")
+                div(class="tableCell h-20 flex-1 align-middle text-center")
+                div(class="tableCell h-20 flex-1 align-middle text-center")
+                div(class="tableCell h-20 flex-1 align-middle text-center")
+            div(class="tableCell h-20 flex-1 align-middle text-center")=user._id
+            div(class="tableCell h-20 flex-1 align-middle text-center")
+                input(class="shadow bg-teal-400 hover:bg-teal-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded", type="submit", value="Save")
