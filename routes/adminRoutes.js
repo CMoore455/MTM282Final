@@ -184,19 +184,16 @@ adminRouter.route('/update').post(
         // check if the body object has changed
         //                                  ACTIVE      ==      NOT EXISTS                  RETURN TRUE
         //                                  ACTIVE      ==      EXISTS                      RETURN FALSE
-
         let chkIsActive = request.body['chkIsActive'] ? true : false
         let chkIsAdmin = request.body['chkIsAdmin'] ? true : false
-        let wasActive = parseBool(request.query.wasActive)
-        let wasAdmin = parseBool(request.query.wasAdmin)
-        let changeActiveStatus = wasActive == chkIsActive ? false : true
-        let changeAdminStatus = wasAdmin == chkIsAdmin ? false : true
-        console.log("wasActive : isActive")
-        console.log(`${wasActive} == ${chkIsActive} -> change: ${changeActiveStatus}`)
-        // console.log(`change active status: ${changeActiveStatus}`)
-        console.log("wasAdmin : isAdmin")
-        console.log(`${wasAdmin} == ${chkIsAdmin} -> change: ${changeAdminStatus}`)
-        // console.log(`change admin status: ${changeAdminStatus}`)
+        let wasActive = request.query.wasActive === 'true'
+        let wasAdmin = request.query.wasAdmin === 'true'
+        let changeActiveStatus = wasActive === chkIsActive ? false : true
+        let changeAdminStatus = wasAdmin === chkIsAdmin ? false : true
+        // console.log("\nwasActive : isActive")
+        // console.log(`${wasActive} === ${chkIsActive} -> change: ${changeActiveStatus}`)
+        // console.log("\nwasAdmin : isAdmin")
+        // console.log(`${wasAdmin} === ${chkIsAdmin} -> change: ${changeAdminStatus}`)
         if (changeActiveStatus || changeAdminStatus) {
             // update one or both fields
             let dbPromise = new Promise(function(resolve, reject) {
